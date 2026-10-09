@@ -22,7 +22,6 @@ class RenderHook final {
         if (*reinterpret_cast<const uint8_t*>(loc.address()) != 0xE8) {
             SKSE::stl::report_and_fail("Unsupported render hook: expected a direct CALL instruction");
         }
-        SKSE::AllocTrampoline(14);
         instance.orig_render_ = SKSE::GetTrampoline().write_call<5>(
             loc.address(), (void (*)(uint32_t))hook
         );
@@ -83,7 +82,6 @@ class InputHook final {
         if (*reinterpret_cast<const uint8_t*>(loc.address()) != 0xE8) {
             SKSE::stl::report_and_fail("Unsupported input hook: expected a direct CALL instruction");
         }
-        SKSE::AllocTrampoline(14);
         instance.orig_input_ = SKSE::GetTrampoline().write_call<5>(
             loc.address(),
             (void (*)(RE::BSTEventSource<RE::InputEvent*>*, RE::InputEvent* const*))hook
@@ -655,6 +653,8 @@ Init(
         return std::unexpected("cannot initialize Dear ImGui components");
     }
 
+    // CommonLib initializes the pool once; reserve both 14-byte hook stubs together.
+    SKSE::AllocTrampoline(2 * 14);
     internal::RenderHook::Init(ui, ui_mutex);
     internal::InputHook::Init(ui, ui_mutex, hotkeys, hotkeys_mutex, settings.menu_toggle_keysets);
 

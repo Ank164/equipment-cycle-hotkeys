@@ -15,6 +15,9 @@ hook offsets were checked against the local 1.7.104.0 executable and are unchang
 Hook installation now checks for a direct CALL opcode before patching. This check
 detects an unexpected opcode; it does not prove the target's identity.
 Custom logging is preserved through SKSE initialization.
+Version 1.4.2 reserves both hook stubs in one 28-byte trampoline allocation.
+CommonLib 11 initializes that pool only once, so separate 14-byte requests leave
+the second hook without space (the startup allocation error in version 1.4.1).
 The ImGui backend bridges CommonLib's REX DirectX interfaces to the Windows SDK,
 and serialization uses Boost 1.89's `boost::system::result` API.
 
@@ -37,7 +40,9 @@ configuration if you have customized it.
 ## Validation limits
 
 The Release DLL, development app, and tests built successfully with MSVC
-19.51.36256. All 30 CTest entries passed. The DLL exports `SKSEPlugin_Version`,
+19.51.36256. All 31 CTest entries passed (30 cases, 313 assertions), including
+a regression test that installs two distinct call hooks into a 28-byte buffer.
+The DLL exports `SKSEPlugin_Version`,
 `SKSEPlugin_Query`, and `SKSEPlugin_Load`; the ZIP contains `SKSE/Plugins` at its root.
 
 Checking the executable's hook instructions and passing the automated tests do not

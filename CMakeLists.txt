@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28.1)
-project(EquipmentCycleHotkeys VERSION 1.4.1 LANGUAGES CXX)
+project(EquipmentCycleHotkeys VERSION 1.4.2 LANGUAGES CXX)
 
 
 ###########################################################
@@ -30,6 +30,7 @@ set(test_sources
     "tests/key_tests.cpp"
     "tests/serde_tests.cpp"
     "tests/ui_state_tests.cpp"
+    "tests/trampoline_tests.cpp"
 )
 
 

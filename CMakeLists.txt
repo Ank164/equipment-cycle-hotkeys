@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28.1)
-project(EquipmentCycleHotkeys VERSION 1.4.0 LANGUAGES CXX)
+project(EquipmentCycleHotkeys VERSION 1.4.1 LANGUAGES CXX)
 
 
 ###########################################################
@@ -135,7 +135,7 @@ add_custom_target(zip_mod ALL
 
     COMMAND "${CMAKE_COMMAND}" -E tar cvf
         "${PROJECT_SOURCE_DIR}/dist/${PROJECT_NAME}-${PROJECT_VERSION}-${CMAKE_BUILD_TYPE}.zip"
-        --format=zip -- "${PROJECT_SOURCE_DIR}/dist/SKSE"
+        --format=zip -- SKSE
 
     DEPENDS "${PROJECT_NAME}"
     # tar is sensitive to the working directory.

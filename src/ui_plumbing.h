@@ -19,6 +19,9 @@ class RenderHook final {
         static constexpr auto hook = [](uint32_t n) -> void { instance.Render(n); };
 
         auto loc = REL::Relocation<uintptr_t>(REL::RelocationID(75461, 77246), REL::Offset(0x9));
+        if (*reinterpret_cast<const uint8_t*>(loc.address()) != 0xE8) {
+            SKSE::stl::report_and_fail("Unsupported render hook: expected a direct CALL instruction");
+        }
         SKSE::AllocTrampoline(14);
         instance.orig_render_ = SKSE::GetTrampoline().write_call<5>(
             loc.address(), (void (*)(uint32_t))hook
@@ -77,6 +80,9 @@ class InputHook final {
         };
 
         auto loc = REL::Relocation<uintptr_t>(REL::RelocationID(67315, 68617), REL::Offset(0x7b));
+        if (*reinterpret_cast<const uint8_t*>(loc.address()) != 0xE8) {
+            SKSE::stl::report_and_fail("Unsupported input hook: expected a direct CALL instruction");
+        }
         SKSE::AllocTrampoline(14);
         instance.orig_input_ = SKSE::GetTrampoline().write_call<5>(
             loc.address(),
@@ -633,7 +639,7 @@ Init(
         return std::unexpected("cannot get renderer");
     }
 
-    auto sd = DXGI_SWAP_CHAIN_DESC();
+    auto sd = REX::W32::DXGI_SWAP_CHAIN_DESC();
     if (swapchain->GetDesc(&sd) != S_OK) {
         return std::unexpected("cannot get swap chain description");
     }
@@ -641,7 +647,11 @@ Init(
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     internal::Configure(settings);
-    if (!ImGui_ImplWin32_Init(sd.OutputWindow) || !ImGui_ImplDX11_Init(device, ctx)) {
+    if (!ImGui_ImplWin32_Init(sd.outputWindow) ||
+        !ImGui_ImplDX11_Init(
+            reinterpret_cast<ID3D11Device*>(device),
+            reinterpret_cast<ID3D11DeviceContext*>(ctx)
+        )) {
         return std::unexpected("cannot initialize Dear ImGui components");
     }
 

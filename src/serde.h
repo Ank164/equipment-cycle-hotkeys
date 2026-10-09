@@ -79,7 +79,7 @@ tag_invoke(const boost::json::value_from_tag&, boost::json::value& jv, const Key
     jv = std::move(ja);
 }
 
-inline boost::json::result<Keyset>
+inline boost::system::result<Keyset>
 tag_invoke(
     const boost::json::try_value_to_tag<Keyset>&,
     const boost::json::value& jv,
@@ -144,7 +144,7 @@ tag_invoke(const boost::json::value_from_tag&, boost::json::value& jv, const Equ
     jv = std::move(ja);
 }
 
-inline boost::json::result<Equipset>
+inline boost::system::result<Equipset>
 tag_invoke(
     const boost::json::try_value_to_tag<Equipset>&,
     const boost::json::value& jv,
@@ -231,7 +231,7 @@ tag_invoke(
 }
 
 template <typename Q>
-inline boost::json::result<Hotkey<Q>>
+inline boost::system::result<Hotkey<Q>>
 tag_invoke(
     const boost::json::try_value_to_tag<Hotkey<Q>>&,
     const boost::json::value& jv,
@@ -276,7 +276,7 @@ tag_invoke(
 }
 
 template <typename Q>
-inline boost::json::result<Hotkeys<Q>>
+inline boost::system::result<Hotkeys<Q>>
 tag_invoke(
     const boost::json::try_value_to_tag<Hotkeys<Q>>&,
     const boost::json::value& jv,
@@ -296,7 +296,7 @@ tag_invoke(
 
 /// Note that there's no `value_from` tag_invoke. Settings are only every configured through JSON
 /// files, so there's no need to serialize settings to JSON.
-inline boost::json::result<Settings>
+inline boost::system::result<Settings>
 tag_invoke(
     const boost::json::try_value_to_tag<Settings>&,
     const boost::json::value& jv,

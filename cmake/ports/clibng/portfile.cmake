@@ -1,8 +1,8 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO alandtse/CommonLibVR
-    REF a5859e42cbd83421527b5816054e346a78d52411
-    SHA512 e3e4240a71e1816d9cf3f428b6dfe01c9ce121148fa938ea8e94e5822a8f5e662a6babef49b5c2be972ae7a5753483f1a88a4b801fbc88ed1dc937fb85db2d00
+    REF 94faaed0c60eddd8347767f2d4d29a97c93bde8c # CommonLibSSE-NG 11.0.0: Skyrim 1.7.104 / Address Library format 5
+    SHA512 d1753f0744608b9ecc60dc57b9d49fa6d846a45f208550fa734cb42e53dba79ee84147658c77bc4ad56fd7457a8d63b54b53a2c28e47f72572d71021abf9791b
     HEAD_REF ng
 )
 
@@ -30,13 +30,15 @@ vcpkg_configure_cmake(
 )
 
 vcpkg_install_cmake()
-vcpkg_cmake_config_fixup(PACKAGE_NAME CommonLibSSE CONFIG_PATH lib/cmake)
+vcpkg_cmake_config_fixup(PACKAGE_NAME CommonLibSSE CONFIG_PATH lib/cmake/CommonLibSSE)
 vcpkg_copy_pdbs()
 
 file(GLOB CMAKE_CONFIGS "${CURRENT_PACKAGES_DIR}/share/CommonLibSSE/CommonLibSSE/*.cmake")
 file(INSTALL ${CMAKE_CONFIGS} DESTINATION "${CURRENT_PACKAGES_DIR}/share/CommonLibSSE")
 file(INSTALL "${SOURCE_PATH}/cmake/CommonLibSSE.cmake" DESTINATION "${CURRENT_PACKAGES_DIR}/share/CommonLibSSE")
-file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
+file(INSTALL "${SOURCE_PATH}/COPYING.txt" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
+file(INSTALL "${SOURCE_PATH}/EXCEPTIONS.md" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+file(INSTALL "${SOURCE_PATH}/licenses/" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}/licenses")
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/share/CommonLibSSE/CommonLibSSE")

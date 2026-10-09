@@ -158,7 +158,8 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse) {
 
     InitSettings();
     InitLogging(*plugin_decl);
-    SKSE::Init(skse);
+    SKSE::Init(skse, false);
+    SKSE::log::info("Skyrim runtime {}", REL::Module::get().version().string());
 
     const auto* mi = SKSE::GetMessagingInterface();
     const auto* si = SKSE::GetSerializationInterface();

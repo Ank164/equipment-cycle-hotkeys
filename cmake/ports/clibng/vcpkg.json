@@ -1,19 +1,23 @@
 {
     "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
     "name": "clibng",
-    "version": "0.0.0",
+    "version": "11.0.0",
     "homepage": "https://github.com/alandtse/CommonLibVR",
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "supports": "windows & x64",
     "dependencies": [
         {
             "name": "vcpkg-cmake-config",
             "host": true
         },
+        "directxmath",
         "directxtk",
         "fmt",
         "rapidcsv",
         "spdlog",
+        "nlohmann-json",
+        "simpleini",
+        "toml11",
         "xbyak"
     ]
 }
